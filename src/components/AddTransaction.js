@@ -1,12 +1,22 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
+import { GlobalContext } from '../context/GlobalState'
+import { v4 as uuidv4 } from 'uuid';
 
 export const AddTransaction = () => {
     const [expenseName, setExpenseName] = useState('');
     const [amount, setAmount] = useState(0);
 
+    const {addTransaction} = useContext(GlobalContext);
+
     const onSubmit = (e) => {
         e.preventDefault();
-        console.log(expenseName, amount);
+        addTransaction({
+            id: uuidv4(),
+            name: expenseName,
+            amount: parseInt(amount)
+        });
+        setExpenseName('');
+        setAmount(0);
     }
 
     return(
